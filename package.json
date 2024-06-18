@@ -24,7 +24,13 @@
     "wordcloud",
     "react"
   ],
-  "author": "HyeryongChoi, hae-on",
+  "author": {
+    "name": "@INDIE-RO"
+  },
+  "contributors": [
+    "HyeryongChoi",
+    "hae-on"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/INDIE-RO/adorable-word-cloud/issues"
@@ -62,7 +68,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_c5a85114a19b133"
   },
   "dependencies": {
     "react": "^18.2.0",

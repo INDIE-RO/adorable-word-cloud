@@ -1,5 +1,5 @@
 function AdorableWordCloud() {
-  return <div></div>;
+  return <div>AdorableWordCloud</div>;
 }
 
 export default AdorableWordCloud;
