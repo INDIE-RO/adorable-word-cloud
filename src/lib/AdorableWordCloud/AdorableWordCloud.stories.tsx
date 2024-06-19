@@ -97,7 +97,11 @@ export const BasicColors: Story = {
       },
     ],
     options: {
+      rotationDivision: 0,
       colors: basicColors,
+    },
+    callbacks: {
+      onWordClick: (word) => console.log(word),
     },
   },
 };
