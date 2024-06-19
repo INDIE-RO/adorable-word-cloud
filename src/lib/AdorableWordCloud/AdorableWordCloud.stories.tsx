@@ -62,7 +62,7 @@ export const BasicColors: Story = {
   args: {
     words: wordsExample,
     options: {
-      fontSizeRange: [14, 90],
+      fontSizeRange: [16, 90],
       rotationDivision: 0,
       colors: basicColors,
     },

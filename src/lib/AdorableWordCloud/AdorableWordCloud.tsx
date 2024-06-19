@@ -121,7 +121,7 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }:
         .style('font-weight', (word) => word.weight ?? 'normal') // 각 'text' 요소의 폰트 굵기를 설정합니다.
         .style('padding', (word) => word.padding ?? '0') // 각 'text' 요소의 여백을 설정합니다.
         .style('fill', (word, i) =>
-          colors.length > 0 ? colors[~~(i / colorGroupSize) % colors.length] : d3.schemeCategory10[i % 10],
+          colors.length > 0 ? shuffle(colors)[~~(i / colorGroupSize) % colors.length] : d3.schemeCategory10[i % 10],
         ) // 가중치(word.value) 값에 따라 각 'text' 요소의 색상을 설정합니다.
         .attr('cursor', onWordClick ? 'pointer' : 'default')
         .attr('text-anchor', 'middle') // 텍스트의 앵커를 중앙으로 설정합니다.
@@ -190,4 +190,19 @@ function generateRotationAngles(min: number = -90, max: number = 90, steps: numb
 
   const stepSize = (max - min) / (steps - 1);
   return Array.from({ length: steps }, (_, i) => min + i * stepSize);
+}
+
+/**
+ * 배열을 무작위로 섞습니다.
+ */
+function shuffle<T>(array: T[] = []): T[] {
+  const shuffledArray = [...array];
+
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+
+  return shuffledArray;
 }
