@@ -12,7 +12,7 @@ export type FontWeight = 'normal' | 'bold' | 100 | 200 | 300 | 400 | 600 | 700 |
 export type Spiral = 'archimedean' | 'rectangular';
 export type MinMaxPair = [number, number];
 
-export interface Options {
+export interface AllOptions {
   colors: string[];
   enableRandomization: boolean;
   fontFamily: string;
@@ -26,11 +26,15 @@ export interface Options {
   transitionDuration: number;
 }
 
-export interface Callbacks {
-  onWordClick: (word: CloudWord) => void;
+export type Options = Partial<AllOptions>;
+
+export interface AllCallbacks {
+  onWordClick: <T extends CloudWord = CloudWord>(word: T) => void;
 }
 
-const INITIAL_OPTIONS: Options = {
+export type Callbacks = Partial<AllCallbacks>;
+
+const INITIAL_OPTIONS: AllOptions = {
   colors: [],
   enableRandomization: true,
   fontFamily: 'Impact',
@@ -46,11 +50,11 @@ const INITIAL_OPTIONS: Options = {
 
 interface AdorableWordCloudProps {
   words: CloudWord[];
-  options?: Partial<Options>;
-  callbacks?: Partial<Callbacks>;
+  options?: Options;
+  callbacks?: Callbacks;
 }
 
-const initOptions = (options: Partial<Options>) => {
+const initOptions = (options: Options) => {
   return {
     ...INITIAL_OPTIONS,
     ...options,
