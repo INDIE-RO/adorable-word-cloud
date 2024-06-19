@@ -27,6 +27,10 @@ interface Options {
   transitionDuration: number;
 }
 
+interface Callbacks {
+  onWordClick: (word: CloudWord) => void;
+}
+
 const INITIAL_OPTIONS: Options = {
   width: 400,
   height: 400,
@@ -46,6 +50,7 @@ const INITIAL_OPTIONS: Options = {
 interface AdorableWordCloudProps {
   words: CloudWord[];
   options?: Partial<Options>;
+  callbacks?: Partial<Callbacks>;
 }
 
 const init = (options: Partial<Options>) => {
@@ -57,7 +62,7 @@ const init = (options: Partial<Options>) => {
 
 let fixedWords: Word[] = [];
 
-function AdorableWordCloud({ words, options = INITIAL_OPTIONS }: AdorableWordCloudProps) {
+function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }: AdorableWordCloudProps) {
   const {
     width,
     height,
@@ -73,6 +78,7 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS }: AdorableWordClo
     spiral,
     transitionDuration,
   } = init(options);
+  const { onWordClick } = callbacks;
 
   const colorGroupSize = Math.ceil(words.length / colors.length);
   const fontSizes = generateWeightedFontSize(words, ...fontSizeRange);
@@ -95,9 +101,12 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS }: AdorableWordClo
       .append('g') // SVG 안에 'g' 요소(그룹 요소)를 추가합니다.
       .attr('transform', `translate(${width / 2}, ${height / 2})`) // 그룹 요소를 SVG의 중앙으로 이동시킵니다.
       .selectAll('text') // 그룹 요소 안에서 'text' 요소들을 선택합니다.
-      .data(words) // 단어 배열(words) 데이터를 바인딩합니다.
+      .data(cloudWords) // 단어 배열(cloudWords) 데이터를 바인딩합니다.
       .enter() // 데이터 항목마다 새로운 'text' 요소를 생성합니다.
       .append('text') // 생성된 각 데이터 항목에 'text' 요소를 추가합니다.
+      .on('click', function (this, _, word) {
+        if (onWordClick) onWordClick(word);
+      }) // 각 'text' 요소에 클릭 이벤트를 추가합니다.
       .style('font-family', (word) => word.font ?? 'Impact') // 각 'text' 요소의 폰트 패밀리를 설정합니다.
       .style('font-size', (word) => `${word.size}px`) // 각 'text' 요소의 폰트 크기를 설정합니다.
       .style('font-weight', (word) => word.weight ?? 'normal') // 각 'text' 요소의 폰트 굵기를 설정합니다.
@@ -105,8 +114,9 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS }: AdorableWordClo
       .style('fill', (word, i) =>
         colors.length > 0 ? colors[~~(i / colorGroupSize) % colors.length] : d3.schemeCategory10[i % 10],
       ) // 가중치(word.size) 값에 따라 각 'text' 요소의 색상을 설정합니다.
+      .attr('cursor', onWordClick ? 'pointer' : 'default')
       .attr('text-anchor', 'middle') // 텍스트의 앵커를 중앙으로 설정합니다.
-      .text((word) => word.text ?? '') // 각 'text' 요소에 텍스트를 설정합니다.
+      .text((word) => word.text) // 각 'text' 요소에 텍스트를 설정합니다.
       .transition() // 트랜지션 효과를 적용합니다.
       .duration(transitionDuration) // 트랜지션의 지속 시간을 설정합니다.
       .attr('transform', (word) => `translate(${word.x}, ${word.y}) rotate(${word.rotate})`); // 텍스트의 위치와 회전 각도를 설정합니다.

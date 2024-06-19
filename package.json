@@ -1,6 +1,6 @@
 {
   "name": "adorable-word-cloud",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": false,
   "description": "Adorable Word Cloud For React!",
   "type": "module",
@@ -22,7 +22,9 @@
   },
   "keywords": [
     "wordcloud",
-    "react"
+    "react",
+    "d3",
+    "d3-cloud"
   ],
   "author": {
     "name": "@INDIE-RO"
