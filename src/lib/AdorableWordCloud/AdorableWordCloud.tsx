@@ -12,7 +12,7 @@ export type FontWeight = 'normal' | 'bold' | 100 | 200 | 300 | 400 | 600 | 700 |
 export type Spiral = 'archimedean' | 'rectangular';
 export type MinMaxPair = [number, number];
 
-export interface Options {
+export interface AllOptions {
   colors: string[];
   enableRandomization: boolean;
   fontFamily: string;
@@ -26,11 +26,15 @@ export interface Options {
   transitionDuration: number;
 }
 
-export interface Callbacks {
-  onWordClick: (word: CloudWord) => void;
+export type Options = Partial<AllOptions>;
+
+export interface AllCallbacks {
+  onWordClick: <T extends CloudWord = CloudWord>(word: T) => void;
 }
 
-const INITIAL_OPTIONS: Options = {
+export type Callbacks = Partial<AllCallbacks>;
+
+const INITIAL_OPTIONS: AllOptions = {
   colors: [],
   enableRandomization: true,
   fontFamily: 'Impact',
@@ -46,11 +50,11 @@ const INITIAL_OPTIONS: Options = {
 
 interface AdorableWordCloudProps {
   words: CloudWord[];
-  options?: Partial<Options>;
-  callbacks?: Partial<Callbacks>;
+  options?: Options;
+  callbacks?: Callbacks;
 }
 
-const initOptions = (options: Partial<Options>) => {
+const initOptions = (options: Options) => {
   return {
     ...INITIAL_OPTIONS,
     ...options,
@@ -117,7 +121,7 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }:
         .style('font-weight', (word) => word.weight ?? 'normal') // 각 'text' 요소의 폰트 굵기를 설정합니다.
         .style('padding', (word) => word.padding ?? '0') // 각 'text' 요소의 여백을 설정합니다.
         .style('fill', (word, i) =>
-          colors.length > 0 ? colors[~~(i / colorGroupSize) % colors.length] : d3.schemeCategory10[i % 10],
+          colors.length > 0 ? shuffle(colors)[~~(i / colorGroupSize) % colors.length] : d3.schemeCategory10[i % 10],
         ) // 가중치(word.value) 값에 따라 각 'text' 요소의 색상을 설정합니다.
         .attr('cursor', onWordClick ? 'pointer' : 'default')
         .attr('text-anchor', 'middle') // 텍스트의 앵커를 중앙으로 설정합니다.
@@ -146,9 +150,8 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }:
     const updateDimensions = () => {
       if (containerRef.current) {
         const { offsetWidth, offsetHeight } = containerRef.current;
-        const curSize = Math.min(offsetWidth, offsetHeight);
 
-        if (curSize > MIN_SIZE) setDimensions({ width: curSize, height: curSize });
+        setDimensions({ width: Math.max(offsetWidth, MIN_SIZE), height: Math.max(offsetHeight, MIN_SIZE) });
       }
     };
 
@@ -187,4 +190,19 @@ function generateRotationAngles(min: number = -90, max: number = 90, steps: numb
 
   const stepSize = (max - min) / (steps - 1);
   return Array.from({ length: steps }, (_, i) => min + i * stepSize);
+}
+
+/**
+ * 배열을 무작위로 섞습니다.
+ */
+function shuffle<T>(array: T[] = []): T[] {
+  const shuffledArray = [...array];
+
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+
+  return shuffledArray;
 }
