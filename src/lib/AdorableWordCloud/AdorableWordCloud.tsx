@@ -146,9 +146,8 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }:
     const updateDimensions = () => {
       if (containerRef.current) {
         const { offsetWidth, offsetHeight } = containerRef.current;
-        const curSize = Math.min(offsetWidth, offsetHeight);
 
-        if (curSize > MIN_SIZE) setDimensions({ width: curSize, height: curSize });
+        setDimensions({ width: Math.max(offsetWidth, MIN_SIZE), height: Math.max(offsetHeight, MIN_SIZE) });
       }
     };
 
