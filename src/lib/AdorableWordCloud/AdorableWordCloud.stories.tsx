@@ -14,39 +14,39 @@ type Story = StoryObj<typeof AdorableWordCloud>;
 const wordsExample = [
   {
     text: 'Hello',
-    size: 10,
+    value: 10,
   },
   {
     text: 'world',
-    size: 20,
+    value: 20,
   },
   {
     text: 'normally',
-    size: 30,
+    value: 30,
   },
   {
     text: 'you',
-    size: 40,
+    value: 40,
   },
   {
     text: 'want',
-    size: 50,
+    value: 50,
   },
   {
     text: 'more',
-    size: 60,
+    value: 60,
   },
   {
     text: 'words',
-    size: 70,
+    value: 70,
   },
   {
     text: 'than',
-    size: 80,
+    value: 80,
   },
   {
     text: 'this',
-    size: 90,
+    value: 90,
   },
 ];
 
