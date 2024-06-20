@@ -35,7 +35,7 @@ export interface AllCallbacks {
 export type Callbacks = Partial<AllCallbacks>;
 
 const INITIAL_OPTIONS: AllOptions = {
-  colors: [],
+  colors: ['#B0E650', '#ff7f0e', '#4DD5CB', '#568CEC', '#CE7DFF', '#4FD87D'],
   enableRandomization: true,
   fontFamily: 'Impact',
   fontStyle: 'normal',
@@ -116,6 +116,11 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }:
         .on('click', function (this, _, word) {
           if (onWordClick) onWordClick(word);
         }) // 각 'text' 요소에 클릭 이벤트를 추가합니다.
+        .style('fill', (word, i) =>
+          colors.length > 0 ? colors[~~(i / colorGroupSize) % colors.length] : d3.schemeCategory10[i % 10],
+        ) // 가중치(word.value) 값에 따라 각 'text' 요소의 초기색상을 설정합니다.
+        .transition() // 트랜지션 효과를 적용합니다.
+        .duration(transitionDuration) // 트랜지션의 지속 시간을 설정합니다.
         .style('font-family', (word) => word.font ?? 'Impact') // 각 'text' 요소의 폰트 패밀리를 설정합니다.
         .style('font-size', (word) => `${word.value}px`) // 각 'text' 요소의 폰트 크기를 설정합니다.
         .style('font-weight', (word) => word.weight ?? 'normal') // 각 'text' 요소의 폰트 굵기를 설정합니다.
@@ -126,8 +131,6 @@ function AdorableWordCloud({ words, options = INITIAL_OPTIONS, callbacks = {} }:
         .attr('cursor', onWordClick ? 'pointer' : 'default')
         .attr('text-anchor', 'middle') // 텍스트의 앵커를 중앙으로 설정합니다.
         .text((word) => word.text) // 각 'text' 요소에 텍스트를 설정합니다.
-        .transition() // 트랜지션 효과를 적용합니다.
-        .duration(transitionDuration) // 트랜지션의 지속 시간을 설정합니다.
         .attr('transform', (word) => `translate(${word.x}, ${word.y}) rotate(${word.rotate})`); // 텍스트의 위치와 회전 각도를 설정합니다.
     };
 
