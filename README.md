@@ -1,10 +1,10 @@
 # Adorable Word Cloud ✨
 
+![word cloud example](/docs/assets/wordcloud-example.gif)
+
 Adorable Word Cloud is a React component powered by D3 for creating dynamic and customizable word clouds.
 
 ## Installation
-
-Install the package
 
 ### npm
 
@@ -100,6 +100,10 @@ interface Callbacks {
 - `d3 v7`
 - `d3-cloud v1`
 - `vite v5`
+
+## Explore More in Storybook
+
+Explore additional examples and configurations in our [Storybook](https://6671210e13bfac41c23ac76e-hukxlsrnag.chromatic.com/).
 
 ## Browser Support
 
