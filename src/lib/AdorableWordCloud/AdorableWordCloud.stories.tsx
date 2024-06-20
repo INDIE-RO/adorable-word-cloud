@@ -72,7 +72,7 @@ export const BasicColors: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: '400px', height: '400px' }}>
+      <div style={{ width: '400px', height: '400px', backgroundColor: 'black' }}>
         <Story />
       </div>
     ),
