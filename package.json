@@ -1,6 +1,6 @@
 {
   "name": "adorable-word-cloud",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": false,
   "description": "Adorable Word Cloud For React!",
   "type": "module",
