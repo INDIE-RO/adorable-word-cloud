@@ -43,7 +43,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build:sb": "storybook build",
     "chromatic": "npx chromatic --project-token=chpt_c5a85114a19b133"
   },
   "dependencies": {
