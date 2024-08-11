@@ -103,7 +103,7 @@ interface Callbacks {
 
 ## Explore More in Storybook
 
-Explore additional examples and configurations in our [Storybook](https://6671210e13bfac41c23ac76e-hukxlsrnag.chromatic.com/).
+Explore additional examples and configurations in our [Storybook](https://indie-ro.github.io/adorable-word-cloud).
 
 ## Browser Support
 
