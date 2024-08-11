@@ -22,7 +22,7 @@ yarn add adorable-word-cloud
 
 ```tsx
 import React from 'react';
-import AdorableWordCloud, { CloudWord, Options, Callbacks } from 'adorable-word-cloud';
+import { AdorableWordCloud, CloudWord, Options, Callbacks } from 'adorable-word-cloud';
 
 const words: CloudWord[] = [
   { text: 'Hello', value: 30 },
